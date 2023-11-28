@@ -11,7 +11,6 @@ router.post("/",
     validator(req, res, next, createCustomerValidation)
   },
   [
-    verification.setHeader,
     authJwt.verifyToken,
     verification.checkPropertyAlotment
   ],
@@ -23,7 +22,6 @@ router.put("/",
     validator(req, res, next, updateCustomerValidation)
   },
   [
-    verification.setHeader,
     authJwt.verifyToken,
     verification.checkPropertyAlotment
   ],
@@ -34,7 +32,6 @@ router.put("/approve",
     validator(req, res, next, approvedCustomerValidation)
   },
   [
-    verification.setHeader,
     authJwt.verifyToken
   ],
   controller.approveCustomer
@@ -43,7 +40,6 @@ router.put("/approve",
 
 router.get("/:id",
   [
-    verification.setHeader,
     authJwt.verifyToken
   ],
   controller.getCustomerById
@@ -54,7 +50,6 @@ router.get("/",
     validator(req, res, next, getCustomerValidation)
   },
   [
-    verification.setHeader,
     authJwt.verifyToken
   ],
   controller.getAllCustomers
@@ -62,7 +57,6 @@ router.get("/",
 
 router.delete("/:id",
   [
-    verification.setHeader,
     authJwt.verifyToken
   ],
   controller.deleteCustomer
@@ -72,9 +66,6 @@ router.get("/verify_cnic",
   (req, res, next) => {
     validator(req, res, next, cnicValidation)
   },
-  [
-    verification.setHeader
-  ],
   controller.verifyCNIC
 );
 
@@ -82,9 +73,6 @@ router.get("/verify_property_id",
   (req, res, next) => {
     validator(req, res, next, propertyIdValidation)
   },
-  [
-    verification.setHeader
-  ],
   controller.verifiyPropertyId
 );
 

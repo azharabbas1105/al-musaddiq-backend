@@ -53,7 +53,8 @@ router.put("/api/auth/update_password",
   ],
   controller.updateUserPassword
 );
-router.post("/signout", controller.signout);
+router.post("/signout", 
+controller.signout);
 // };
 
 module.exports = router;

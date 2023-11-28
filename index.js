@@ -26,7 +26,13 @@ app.use(express.urlencoded({ extended: true }));
 //   "Access-Control-Allow-Headers",
 //   "Origin, Content-Type, Accept"
 // );
-
+  app.use(function (req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, Content-Type, Accept"
+    );
+    next();
+  })
 app.use(
   cookieSession({
     name: "cookie-session",

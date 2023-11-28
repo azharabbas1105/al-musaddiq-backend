@@ -63,6 +63,7 @@ checkPropertyAlotment = async(req, res, next) => {
 
 setHeader = async(req, res, next) => {
   res.header(
+    "*",
     "Access-Control-Allow-Headers",
     "Origin, Content-Type, Accept"
   );
