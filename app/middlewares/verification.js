@@ -61,10 +61,19 @@ checkPropertyAlotment = async(req, res, next) => {
   next();
 };
 
+setHeader = async(req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, Content-Type, Accept"
+  );
+  next();
+};
+
 const verification = {
   checkDuplicateUsernameOrEmail,
   checkRolesExisted,
-  checkPropertyAlotment
+  checkPropertyAlotment,
+  setHeader
 };
 
 module.exports = verification;
