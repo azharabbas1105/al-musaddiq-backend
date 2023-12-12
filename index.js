@@ -14,31 +14,35 @@ const app = express();
 // };
 
 
-const corsOpts = {
-  origin: '*',
+// const corsOpts = {
+//   origin: '*',
 
-  methods: [
-    'GET',
-    'POST',
-    'PUT',
-    'DELETE',
-  ],
+//   methods: [
+//     'GET',
+//     'POST',
+//     'PUT',
+//     'DELETE',
+//   ],
 
-  allowedHeaders: [
-    'Content-Type',
-  ],
-};
+//   allowedHeaders: [
+//     'Content-Type',
+//   ],
+// };
 
-app.use(cors(corsOpts));
+// app.use(cors(corsOpts));
+
+app.use(cors({
+  origin: ['http://localhost:4200'],
+  "methods": "PUT,GET,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204,
+  credentials: true
+}));
 
 app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, Content-Type, Authorization, If-Modified-Since, Cache-control, Pragma, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers',
-  );
+  res.setHeader("Access-Control-Allow-Origin: *");
+  res.setHeader("Access-Control-Allow-Methods: PUT,GET,POST,DELETE");
+  res.setHeader("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
