@@ -38,21 +38,21 @@ const app = express();
 //   "optionsSuccessStatus": 204,
 //   credentials: true
 // }));
-app.options('*', cors());
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin: *");
-  res.setHeader("Access-Control-Allow-Methods: PUT,GET,POST,DELETE");
-  res.setHeader("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.options('*', cors());
+// app.use(function(req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin: *");
+//   res.setHeader("Access-Control-Allow-Methods: PUT,GET,POST,DELETE");
+//   res.setHeader("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 /* for Angular Client (withCredentials) */
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: ["http://localhost:8081"],
-//   })
-// );
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:4200"],
+  })
+);
 
 // parse requests of content-type - application/json
 app.use(express.json());
