@@ -48,21 +48,21 @@ app.get("/", (req, res) => {
 // require("./app/routes/auth.routes")(app);
 // require("./app/routes/user.routes")(app);
 
-app.use(cors({
-  origin: '*',
-  methods: "PUT,GET,POST,DELETE",
-  credentials: true,
-  allowedHeaders: 'Content-Type,Authorization'
-}));
-
 // app.use(cors({
-//   origin: '*'
+//   origin: '*',
+//   methods: "PUT,GET,POST,DELETE",
+//   credentials: true,
+//   allowedHeaders: 'Content-Type,Authorization'
 // }));
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   next();
-// });
+
+app.use(cors({
+  origin: '*'
+}));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
 const routes = require("./app/routes")
 app.use("/api",routes);
