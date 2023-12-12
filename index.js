@@ -7,7 +7,21 @@ const dbConfig = require("./app/config/db.config");
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
+const corsOptions = {
+  origin: 'https://al-musaddiq.cyclic.app',  // Replace with your allowed origin
+  optionsSuccessStatus: 200    // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
 /* for Angular Client (withCredentials) */
 // app.use(
 //   cors({
