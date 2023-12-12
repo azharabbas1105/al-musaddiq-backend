@@ -7,7 +7,7 @@ const dbConfig = require("./app/config/db.config");
 
 const app = express();
 const corsOptions = {
-  origin: '*', // Update this with the actual origin of your frontend
+  origin: 'http://localhost:4200', // Update this with the actual origin of your frontend
   credentials: true,
 };
 
