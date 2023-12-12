@@ -6,6 +6,18 @@ const cookieSession = require("cookie-session");
 const dbConfig = require("./app/config/db.config");
 
 const app = express();
+const corsOptions = {
+  origin: '*'
+}
+app.use(cors(corsOptions))
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true); 
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+  //Auth Each API Request created by user.
+  next();
+});
 
 
 // parse requests of content-type - application/json
@@ -44,31 +56,6 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to al-musaddiq application." });
 });
 
-// routes
-// require("./app/routes/auth.routes")(app);
-// require("./app/routes/user.routes")(app);
-
-
-
-const corsOpts = {
-  origin: '*',
-
-  methods: [
-    'GET',
-    'POST',
-    'PUT',
-    'DELETE'
-  ],
-
-  allowedHeaders: [
-    'Origin',
-    'Content-Type',
-    'Authorization',
-    'X-Requested-With'
-  ],
-};
-
-app.use(cors(corsOpts));
 const routes = require("./app/routes")
 app.use("/api",routes);
 
