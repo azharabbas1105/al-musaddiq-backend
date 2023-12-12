@@ -31,14 +31,14 @@ const app = express();
 
 // app.use(cors(corsOpts));
 
-app.use(cors({
-  origin: ['http://localhost:4200'],
-  "methods": "PUT,GET,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204,
-  credentials: true
-}));
-
+// app.use(cors({
+//   origin: ['http://localhost:4200'],
+//   "methods": "PUT,GET,POST,DELETE",
+//   "preflightContinue": false,
+//   "optionsSuccessStatus": 204,
+//   credentials: true
+// }));
+app.options('*', cors());
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin: *");
   res.setHeader("Access-Control-Allow-Methods: PUT,GET,POST,DELETE");
