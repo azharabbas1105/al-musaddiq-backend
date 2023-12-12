@@ -7,54 +7,6 @@ const dbConfig = require("./app/config/db.config");
 
 const app = express();
 
-// app.use(cors());
-// const corsOptions = {
-//   origin: 'https://al-musaddiq.cyclic.app',  // Replace with your allowed origin
-//   optionsSuccessStatus: 200    // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
-
-
-// const corsOpts = {
-//   origin: '*',
-
-//   methods: [
-//     'GET',
-//     'POST',
-//     'PUT',
-//     'DELETE',
-//   ],
-
-//   allowedHeaders: [
-//     'Content-Type',
-//   ],
-// };
-
-// app.use(cors(corsOpts));
-
-app.use(cors({
-  origin: '*',
-  "methods": "PUT,GET,POST,DELETE",
-  // "preflightContinue": false,
-  // "optionsSuccessStatus": 204,
-  credentials: true
-}));
-// app.use(cors({
-//   origin: '*'
-// }));
-// app.use(function(req, res, next) {
-//   res.setHeader("Access-Control-Allow-Origin: *");
-//   res.setHeader("Access-Control-Allow-Methods: PUT,GET,POST,DELETE");
-//   res.setHeader("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-
-/* for Angular Client (withCredentials) */
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: ["http://localhost:8081"],
-//   })
-// );
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -95,6 +47,22 @@ app.get("/", (req, res) => {
 // routes
 // require("./app/routes/auth.routes")(app);
 // require("./app/routes/user.routes")(app);
+
+app.use(cors({
+  origin: '*',
+  methods: "PUT,GET,POST,DELETE",
+  credentials: true,
+  allowedHeaders: 'Content-Type,Authorization'
+}));
+
+// app.use(cors({
+//   origin: '*'
+// }));
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   next();
+// });
 
 const routes = require("./app/routes")
 app.use("/api",routes);
