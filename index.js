@@ -8,17 +8,37 @@ const dbConfig = require("./app/config/db.config");
 const app = express();
 
 // app.use(cors());
-const corsOptions = {
-  origin: 'https://al-musaddiq.cyclic.app',  // Replace with your allowed origin
-  optionsSuccessStatus: 200    // some legacy browsers (IE11, various SmartTVs) choke on 204
+// const corsOptions = {
+//   origin: 'https://al-musaddiq.cyclic.app',  // Replace with your allowed origin
+//   optionsSuccessStatus: 200    // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
+
+
+const corsOpts = {
+  origin: '*',
+
+  methods: [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE',
+  ],
+
+  allowedHeaders: [
+    'Content-Type',
+  ],
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOpts));
+
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, Content-Type, Authorization, If-Modified-Since, Cache-control, Pragma, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers',
+  );
   next();
 });
 
@@ -36,17 +56,6 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// res.header(
-//   "Access-Control-Allow-Headers",
-//   "Origin, Content-Type, Accept"
-// );
-  app.use(function (req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, Content-Type, Accept"
-    );
-    next();
-  })
 app.use(
   cookieSession({
     name: "cookie-session",
