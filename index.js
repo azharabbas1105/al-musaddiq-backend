@@ -6,12 +6,27 @@ const cookieSession = require("cookie-session");
 const dbConfig = require("./app/config/db.config");
 
 const app = express();
-const corsOptions = {
-  origin: 'http://localhost:4200', // Update this with the actual origin of your frontend
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: 'http://localhost:4200', // Update this with the actual origin of your frontend
+//   credentials: true,
+// };
 
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
+
+
+
+app.use(cors());
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, Content-Type, Authorization, If-Modified-Since, Cache-control, Pragma, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers',
+    )
+   next();
+});
 // parse requests of content-type - application/json
 app.use(express.json());
 
