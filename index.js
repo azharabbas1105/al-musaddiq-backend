@@ -6,17 +6,17 @@ const cookieSession = require("cookie-session");
 const dbConfig = require("./app/config/db.config");
 
 const app = express();
-// const corsOptions = {
-//   origin: 'http://localhost:4200', // Update this with the actual origin of your frontend
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: 'http://localhost:4200', // Update this with the actual origin of your frontend
+  credentials: true,
+};
 
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 // parse requests of content-type - application/json
 app.use(express.json());
 // enable cors
-app.use(cors());
-app.options("*", cors());
+// app.use(cors());
+// app.options("*", cors());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
