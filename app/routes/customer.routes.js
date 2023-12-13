@@ -45,7 +45,7 @@ router.get("/:id",
   controller.getCustomerById
 );
 
-router.get("/",
+router.post("/get_customers",
   (req, res, next) => {
     validator(req, res, next, getCustomerValidation)
   },
