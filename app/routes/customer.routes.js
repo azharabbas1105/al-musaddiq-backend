@@ -61,14 +61,14 @@ router.delete("/:id",
   controller.deleteCustomer
 );
 
-router.get("/verify_cnic",
+router.post("/verify_cnic",
   (req, res, next) => {
     validator(req, res, next, cnicValidation)
   },
   controller.verifyCNIC
 );
 
-router.get("/verify_property_id",
+router.post("/verify_property_id",
   (req, res, next) => {
     validator(req, res, next, propertyIdValidation)
   },
