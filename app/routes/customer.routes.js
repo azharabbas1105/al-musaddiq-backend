@@ -37,7 +37,6 @@ router.put("/approve",
   controller.approveCustomer
 );
 
-
 router.get("/:id",
   [
     authJwt.verifyToken
