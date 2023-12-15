@@ -19,7 +19,7 @@ const updateCustomerValidation = Joi.object().keys({
   project: Joi.string().required(),
   property_type : Joi.string().required(),
   property_id: Joi.string().required(),
-  ammount: Joi.string().required(),
+  ammount: Joi.number().required(),
   transaction_status: Joi.string().required()
 });
 
