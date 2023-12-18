@@ -196,8 +196,10 @@ exports.getAllCustomers = async (req, res) => {
     const pageSize = parseInt(req.body.pageSize) || 10
 
     let query = {
-      is_deleted: false,
-      is_approved: req.body.is_approved
+      is_deleted: false
+    }
+    if(req.body.is_approved !=null || req.body.is_approved != undefined){
+      query['is_approved'] = req.body.is_approved
     }
 
     if (req.body.search) {

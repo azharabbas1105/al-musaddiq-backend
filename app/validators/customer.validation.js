@@ -36,7 +36,7 @@ const getCustomerValidation = Joi.object().keys({
   page: Joi.number().required(),
   pageSize: Joi.number().required(),
   project: Joi.string().optional(),
-  is_approved: Joi.boolean().required(),
+  is_approved: Joi.boolean().optional().allow(null),
 });
 
 const approvedCustomerValidation = Joi.object().keys({
