@@ -7,19 +7,19 @@ const dbConfig = require("./app/config/db.config");
 
 const app = express();
 const corsOptions = {
-  origin: '*', // Update this with the actual origin of your frontend
+  origin: 'http://localhost:4200', // Update this with the actual origin of your frontend
   credentials: true,
 };
 
 app.use(cors(corsOptions))
 
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//   next();
+// });
 // parse requests of content-type - application/json
 app.use(express.json());
 // enable cors
