@@ -6,37 +6,19 @@ const cookieSession = require("cookie-session");
 const dbConfig = require("./app/config/db.config");
 
 const app = express();
-// const corsOptions = {
-//   origin: 'http://localhost:4200', // Update this with the actual origin of your frontend
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: '*', // Update this with the actual origin of your frontend
+  credentials: true,
+};
 
-// app.use(cors(corsOptions))
-
-
+app.use(cors(corsOptions))
 
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
-
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, Content-Type, Authorization, If-Modified-Since, Cache-control, Pragma, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers',
-  )
-
-  res.header('Access-Control-Expose-Headers', 'File-Name, File-Type')
-
-  /**
-   * For now, just return success on all OPTIONS requests.
-   * These are typically pre-flight requests from CORS and XSRF headers.
-   */
-  if (req.method == 'OPTIONS') {
-    logger.notice('', prepLogData(req, res, 'express_request'))
-    return res.status(200).json({ result: 'success' })
-  } else {
-    return next()
-  }
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
 });
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -77,7 +59,7 @@ app.get("/", (req, res) => {
 });
 
 const routes = require("./app/routes")
-app.use("/api", routes);
+app.use("/api",routes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
