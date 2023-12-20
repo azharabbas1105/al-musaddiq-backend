@@ -1,7 +1,9 @@
 // const config = require("../../config/auth.config");
-const { set } = require("mongoose");
+// const { set } = require("mongoose");
+const fs = require('fs');
 const db = require("../models");
 const apiResponse = require("../utils/apiResponse");
+const User = require('../models/user.model');
 const Customer = db.customer;
 
 /**
@@ -198,7 +200,7 @@ exports.getAllCustomers = async (req, res) => {
     let query = {
       is_deleted: false
     }
-    if(req.body.is_approved !=null || req.body.is_approved != undefined){
+    if (req.body.is_approved != null || req.body.is_approved != undefined) {
       query['is_approved'] = req.body.is_approved
     }
 
@@ -244,6 +246,67 @@ exports.getAllCustomers = async (req, res) => {
       return apiResponse.retrieveData(result, res);
     }
     return apiResponse.errorMessage("Customers Not found.", res);
+  } catch (error) {
+    return apiResponse.throwError(error, res)
+  }
+};
+
+exports.importCustomers = async (req, res) => {
+  try {
+
+    let user = await User.findById(req.body.userId).populate("Role")
+    let isAdmin = false;
+    if (!user) {
+      return apiResponse.errorMessage("Not able to import", res);
+    }
+
+    if (user['Role'] && user['Role'].length) {
+      let index = user['Role'].findIndex(el => el.name.toString() == "admin");
+      if (index >= 0) {
+        isAdmin = true;
+      }
+    }
+    let newCustomers = [];
+    let alreadyExists = [];
+    let mFile = fs.readFileSync('data.json');
+    let fileData = JSON.parse(mFile);
+
+    for (const data of fileData) {
+      let customer = await Customer.findOne(
+        {
+          // name : {$ne:data.name},
+          // cnic : {$ne:data.cnic},
+          is_deleted: false,
+          project: data.project,
+          property_id: data.property_id
+        });
+
+      if (customer) {
+        alreadyExists.push(customer);
+        continue
+      }
+
+      data['is_deleted'] = false;
+      data['is_approved'] = isAdmin;
+      data['transaction_status'] = "Paid";
+      data['approved_by'] = req.body.userId;
+      data['approved_at'] = new Date();
+      data['approved_at'] = new Date();
+
+      let newCustomer = await Customer.create(data);
+      if (newCustomer) {
+        newCustomers.push(newCustomer)
+      }
+    }
+
+    return res.status(200).send({
+      status: "success",
+      new_customers: newCustomers,
+      already_exists: alreadyExists,
+      message: "Customers created successfully",
+      error: ""
+    })
+
   } catch (error) {
     return apiResponse.throwError(error, res)
   }

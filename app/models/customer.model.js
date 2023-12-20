@@ -22,6 +22,9 @@ const customerScheema = new mongoose.Schema({
     ammount: {
         type: Number
     },
+    area : {
+        type: String
+    },
     transaction_status: {
         type: String
     },

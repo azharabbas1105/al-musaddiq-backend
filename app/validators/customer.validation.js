@@ -8,6 +8,7 @@ const createCustomerValidation = Joi.object().keys({
   property_type : Joi.string().required(),
   property_id: Joi.string().required(),
   ammount: Joi.number().required(),
+  area: Joi.string().optional(),
   transaction_status: Joi.string().required()
 });
 
@@ -20,6 +21,7 @@ const updateCustomerValidation = Joi.object().keys({
   property_type : Joi.string().required(),
   property_id: Joi.string().required(),
   ammount: Joi.number().required(),
+  area: Joi.string().optional(),
   transaction_status: Joi.string().required()
 });
 

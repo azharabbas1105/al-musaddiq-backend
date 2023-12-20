@@ -75,4 +75,15 @@ router.post("/verify_property_id",
   controller.verifiyPropertyId
 );
 
+router.post("/import_customers",
+  // (req, res, next) => {
+  //   validator(req, res, next, createCustomerValidation)
+  // },
+  [
+    authJwt.verifyToken,
+    verification.checkPropertyAlotment
+  ],
+  controller.importCustomers
+);
+
 module.exports = router;
