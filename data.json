@@ -305,7 +305,7 @@
       "name": "Hazrat Shah",
       "cnic": "54400-7285351-5",
       "phone": "0313-1805117",
-      "amount": "2,280,000",
+      "amount": 2280000,
       "project": "Quetta"
     },
     {
@@ -316,7 +316,7 @@
       "name": "Rehan Naseer",
       "cnic": "54400-3706730-1",
       "phone": "0333-7937990",
-      "amount": "2,490,000",
+      "amount": 2490000,
       "project": "Quetta"
     },
     {
@@ -327,7 +327,7 @@
       "name": "M.Amjad",
       "cnic": "54400-3255617-5",
       "phone": "0334-2329253",
-      "amount": "3,132,000",
+      "amount": 3132000,
       "project": "Quetta"
     },
     {
@@ -338,7 +338,7 @@
       "name": "M.Amjad",
       "cnic": "54400-3255617-5",
       "phone": "0334-2329253",
-      "amount": "3,132,000",
+      "amount": 3132000,
       "project": "Quetta"
     },
     {
@@ -349,7 +349,7 @@
       "name": "Ikramullah Jaffar",
       "cnic": "56304-0160763-9",
       "phone": "0333-3993361",
-      "amount": "3,404,814",
+      "amount": 3404814,
       "project": "Quetta"
     },
   {

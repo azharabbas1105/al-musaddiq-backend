@@ -15,15 +15,33 @@ const Customer = db.customer;
 exports.createCustomer = async (req, res) => {
   try {
 
-    let customer = await Customer.findOne(
-      {
-        is_deleted: false,
-        project: req.body.project,
-        property_id: req.body.property_id
-      });
+    let query = {
+      is_deleted: false,
+      project: req.body.project,
+      property_id: req.body.property_id
+    }
+
+    if(req.body.block){
+      query['block'] = req.body.block
+    }
+    let customer = await Customer.findOne(query);
 
     if (customer) {
       return apiResponse.errorMessage(req.body.property_id + " already alot to an other customer.", res);
+    }
+
+    let user = await User.findById(req.body.userId).populate("Role")
+   
+    if (!user) {
+      return apiResponse.errorMessage("Not able to import", res);
+    }
+    if (user['Role'] && user['Role'].length) {
+      let index = user['Role'].findIndex(el => el.name.toString() == "admin");
+      if (index >= 0) {
+        req.body['is_approved'] = true
+        req.body['approved_by'] = req.body.userId
+        req.body['approved_at'] = new Date();
+      }
     }
 
     let newCustomer = await Customer.create(req.body);
@@ -54,7 +72,7 @@ exports.updateCustomer = async (req, res) => {
       customer['cnic'] = req.body.cnic
       customer['project'] = req.body.project
       customer['property_id'] = req.body.property_id
-      customer['ammount'] = req.body.ammount
+      customer['amount'] = req.body.amount
       customer['transaction_status'] = req.body.transaction_status
       await customer.save();
       return apiResponse.updateRecord(customer, res);
@@ -272,20 +290,28 @@ exports.importCustomers = async (req, res) => {
     let fileData = JSON.parse(mFile);
 
     for (const data of fileData) {
-      let customer = await Customer.findOne(
-        {
-          // name : {$ne:data.name},
-          // cnic : {$ne:data.cnic},
-          is_deleted: false,
-          project: data.project,
-          property_id: data.property_id
-        });
+
+      let query = {
+        is_deleted: false,
+        project: data.project,
+        property_id: data.property_id
+      }
+  
+      if(data.block){
+        query['block'] = req.body.block
+      }
+
+      let customer = await Customer.findOne(query);
 
       if (customer) {
         alreadyExists.push(customer);
         continue
       }
 
+      console.log(data['amount'])
+      if(data['amount'] && data['amount'].toString().includes(',')){
+        data['amount'] = data['amount'].replaceAll(",", "");
+      }
       data['is_deleted'] = false;
       data['is_approved'] = isAdmin;
       data['transaction_status'] = "Paid";

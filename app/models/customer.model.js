@@ -19,10 +19,13 @@ const customerScheema = new mongoose.Schema({
     property_id: {
         type: String
     },
-    ammount: {
+    amount: {
         type: Number
     },
     area : {
+        type: String
+    },
+    block : {
         type: String
     },
     transaction_status: {

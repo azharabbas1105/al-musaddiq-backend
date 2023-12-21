@@ -7,8 +7,9 @@ const createCustomerValidation = Joi.object().keys({
   project: Joi.string().required(),
   property_type : Joi.string().required(),
   property_id: Joi.string().required(),
-  ammount: Joi.number().required(),
-  area: Joi.string().optional(),
+  amount: Joi.number().required(),
+  area: Joi.string().optional().allow('',null),
+  block: Joi.string().optional().allow('',null),
   transaction_status: Joi.string().required()
 });
 
@@ -20,8 +21,9 @@ const updateCustomerValidation = Joi.object().keys({
   project: Joi.string().required(),
   property_type : Joi.string().required(),
   property_id: Joi.string().required(),
-  ammount: Joi.number().required(),
-  area: Joi.string().optional(),
+  amount: Joi.number().required(),
+  area: Joi.string().optional().allow('',null),
+  block: Joi.string().optional().allow('',null),
   transaction_status: Joi.string().required()
 });
 
