@@ -67,6 +67,20 @@ exports.updateCustomer = async (req, res) => {
 
     let customer = await Customer.findById(req.body.id);
     if (customer) {
+
+      let user = await User.findById(req.body.userId).populate("Role")
+      if (user['Role'] && user['Role'].length) {
+        let index = user['Role'].findIndex(el => el.name.toString() == "admin");
+        if (index >= 0) {
+          customer['is_approved'] = true
+          customer['approved_by'] = req.body.userId
+          customer['approved_at'] = new Date();
+        }else{
+          customer['is_approved'] = false
+        }
+      }
+
+      
       customer['name'] = req.body.name
       customer['phone'] = req.body.phone
       customer['cnic'] = req.body.cnic
@@ -308,7 +322,6 @@ exports.importCustomers = async (req, res) => {
         continue
       }
 
-      console.log(data['amount'])
       if(data['amount'] && data['amount'].toString().includes(',')){
         data['amount'] = data['amount'].replaceAll(",", "");
       }
@@ -316,7 +329,6 @@ exports.importCustomers = async (req, res) => {
       data['is_approved'] = isAdmin;
       data['transaction_status'] = "Paid";
       data['approved_by'] = req.body.userId;
-      data['approved_at'] = new Date();
       data['approved_at'] = new Date();
 
       let newCustomer = await Customer.create(data);
