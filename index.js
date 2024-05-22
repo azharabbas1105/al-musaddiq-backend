@@ -6,12 +6,20 @@ const cookieSession = require("cookie-session");
 const dbConfig = require("./app/config/db.config");
 
 const app = express();
+
 const corsOptions = {
-  origin: 'http://localhost:4200', // Update this with the actual origin of your frontend
+  origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
   credentials: true,
 };
+app.use(cors(corsOptions));
 
-app.use(cors(corsOptions))
+
+// const corsOptions = {
+//   origin: 'http://localhost:4200', // Update this with the actual origin of your frontend
+//   credentials: true,
+// };
+
+// app.use(cors(corsOptions))
 
 
 // app.use(function(req, res, next) {
@@ -62,7 +70,7 @@ const routes = require("./app/routes")
 app.use("/api",routes);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
